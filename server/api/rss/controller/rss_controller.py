@@ -1,5 +1,9 @@
 """RSS Controller File"""
 import feedparser
+import random
+from datetime import datetime
+from time import mktime
+from server.utils.Future import Future
 
 
 def rss_feeds():
@@ -26,11 +30,24 @@ def rss_feeds():
         "http://rss.cnn.com/rss/money_technology.rss",
         "http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
         "http://rss.nytimes.com/services/xml/rss/nyt/Science.xml",
-        "http://rss.nytimes.com/services/xml/rss/nyt/Space.xml",
-        "https://www.nytimes.com/section/opinion/contributors?rss=1",
-        "https://www.nytimes.com/section/opinion/editorials?rss=1"
+        "http://rss.nytimes.com/services/xml/rss/nyt/Space.xml"
     ]
     return feeds
+
+
+def clean_time_structs(f_items):
+    """
+    Helper function to clean time structs from feedparser items
+    :param f_items: list of feed items
+    :return: f_items where each entry uses datetime instead
+    """
+    date_fields = ['published_parsed', 'updated_parsed', 'created_parsed', 'expired_parsed']
+    for i in f_items:
+        for f in date_fields:
+            if f in i:
+                dt = datetime.fromtimestamp(mktime(i[f]))
+                i[f] = str(dt   )
+    return f_items
 
 
 def get_articles(limit):
@@ -39,7 +56,17 @@ def get_articles(limit):
     :param limit: Returns this number of articles
     :return: Custom RSS Feed
     """
-    pass
+    # pull down all feeds
+    future_calls = [Future(feedparser.parse, rss_url) for rss_url in rss_feeds()]
+    # block until they are all in
+    feeds = [future_obj() for future_obj in future_calls]
+    entries = []
+    for feed in feeds:
+        entries.extend(clean_time_structs(feed["items"]))
+    random.shuffle(entries)
+    # Limit isn't working for some reason...
+    # return entries[:limit]
+    return entries
 
 
 def error():
