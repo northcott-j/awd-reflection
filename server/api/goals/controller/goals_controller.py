@@ -1,4 +1,5 @@
 """Goals Controller File"""
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -59,7 +60,27 @@ def search_results(url):
     :param url: URL for Google search query
     :return: Array of {title: str, url: str, desc: str}
     """
-    pass
+    html = requests.get(url)
+    soup = BeautifulSoup(html.content, "html.parser")
+    search_div = soup.find('div', {'id': 'search'})
+    search_divs = search_div.find('ol')
+    parsed_results = []
+    for div in search_divs:
+        result_info = dict()
+        result_info['title'] = div.find('a').text
+        result_info['res_url'] = div.find('a')['href'].replace('/url?q=', '').split('&')[0]
+        result_info['disp_url'] = div.find('cite').text.replace(" ", "")
+        max_span = ''
+        max_span_length = 1
+        for s in div.find_all('span'):
+            s_len = len(s.text)
+            if s_len > max_span_length:
+                max_span = s.text
+                max_span_length = s_len
+        result_info['summary'] = max_span
+        if max_span_length > 5:
+            parsed_results.append(result_info)
+    return parsed_results
 
 
 def get_goal_articles(goal):
@@ -68,7 +89,7 @@ def get_goal_articles(goal):
     :param goal: goal number to lookup
     :return: List of Google searches
     """
-    if int(goal) not in range(1, (len(list_goals()) + 1)):
+    if goal not in range(1, (len(list_goals()) + 1)):
         return "Invalid goal number, yah Dingus!"
     return search_results(query_to_url(goal_search_query(goal)))
 

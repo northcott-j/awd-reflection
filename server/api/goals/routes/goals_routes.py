@@ -13,5 +13,7 @@ def get_goals():
 # Gets list of inspiration entries for a goal
 @goals_api.route('/api/goals/<goal>', methods=['GET'])
 def get_goal_articles(goal):
-    return jsonify(goals.get_goal_articles(goal))
+    if not goal.isdigit():
+        return "The goal's gotta be a number, yah fool!"
+    return jsonify(goals.get_goal_articles(int(goal)))
 
