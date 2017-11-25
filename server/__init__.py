@@ -1,6 +1,6 @@
 """__init__ to setup Flask app and to import API routes"""
 import os
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, send_file
 from api.rss.routes.rss_routes import rss_api
 from api.goals.routes.goals_routes import goals_api
 
@@ -17,3 +17,10 @@ app.register_blueprint(goals_api)
 def serve_frontend(path):
     from server import ROOT_PATH
     return send_from_directory(ROOT_PATH + '/client/', path)
+
+
+# Serves the index file
+@app.route('/')
+def serve_index():
+    from server import ROOT_PATH
+    return send_file(ROOT_PATH + '/client/' + 'index.html')
