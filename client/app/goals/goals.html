@@ -1,1 +1,13 @@
-<navbar  page="'goals'"></navbar>
+<navbar page="'goals'"></navbar>
+<div id="goals" style="padding: 15px 35px 0 35px;;">
+    <span class="badge badge-warning goal" ng-repeat="(key, val) in goals" ng-click="update_feeds(key)"
+          ng-class="{'selected-goal': key == selected_goal}">{{val}}</span>
+</div>
+<ul class="unstyled" style="padding: 35px">
+    <span class="badge badge-warning" ng-show="feeds.length > 0">{{(feeds | filter:filterText).length}} Items</span>
+    <li class="search-result" ng-repeat="feed in feeds track by $index" ng-class="{'dark-result': $index % 2 == 0, 'light-result': $index % 2 == 1}">
+        <h5><a href="{{feed.res_url}}">{{feed.title}}</a></h5>
+        <a class="small-text" href="{{feed.res_url}}">{{feed.disp_url}}</a>
+        <p class="text-left">{{feed.summary}}</p>
+    </li>
+</ul>

@@ -1,0 +1,31 @@
+.unstyled {
+    list-style: none;
+}
+
+.search-result {
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.dark-result {
+    background-color: rgba(0,0,0,.2);
+}
+
+.light-result {
+    background-color: rgba(0,0,0,.06);
+}
+
+.goal {
+    margin: 5px;
+    font-size: 15px;
+}
+
+.selected-goal {
+    background-color: #fff !important;
+    color: #777 !important;
+}
+
+.goal:hover {
+    background-color: #fff !important;
+    color: #777 !important;
+}
