@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, abort
 from ..controller import goals_controller as goals
 
 goals_api = Blueprint('goals_api', __name__)
@@ -14,6 +14,6 @@ def get_goals():
 @goals_api.route('/api/goals/<goal>', methods=['GET'])
 def get_goal_articles(goal):
     if not goal.isdigit():
-        return "The goal's gotta be a number, yah fool!"
+        abort(400, "The goal's gotta be a number, yah fool!")
     return jsonify(goals.get_goal_articles(int(goal)))
 

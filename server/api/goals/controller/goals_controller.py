@@ -1,6 +1,7 @@
 """Goals Controller File"""
 import requests
 from bs4 import BeautifulSoup
+from flask import abort
 
 
 def list_goals():
@@ -90,7 +91,7 @@ def get_goal_articles(goal):
     :return: List of Google searches
     """
     if goal not in range(1, (len(list_goals()) + 1)):
-        return "Invalid goal number, yah Dingus!"
+        abort(400, "Invalid goal number, yah Dingus!")
     return search_results(query_to_url(goal_search_query(goal)))
 
 
