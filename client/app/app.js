@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('awd-reflection', ['ngMaterial', 'ngResource', 'ngRoute', 'ui.bootstrap']).config(function ($mdThemingProvider, $routeProvider, $locationProvider) {
+angular.module('awd-reflection', ['ngMaterial', 'ngSanitize', 'ngResource', 'ngRoute', 'ui.bootstrap']).config(function ($mdThemingProvider, $routeProvider, $locationProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('red')
     .accentPalette('blue-grey');
