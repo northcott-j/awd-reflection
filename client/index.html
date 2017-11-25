@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>JDN | AWD Reflection</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.red-deep_orange.min.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!--Add any CSS for pages here-->
+    <link rel="stylesheet" href="libs/template.css">
+    <link rel="stylesheet" href="components/header/header.css">
+  </head>
+  <body ng-app="awd-reflection" class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <div class="mdl-layout mdl-js-layoutr">
+      <div ng-view="" class="mdl-layout__content"></div>
+    </div>
+    <script src="libs/material.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="app/app.js"></script>
+    <!--TODO :: Include page reqs here -->
+    <script src="app/goals/goals.controller.js"></script>
+    <script src="app/goals/goals.js"></script>
+    <script src="app/rss/rss.controller.js"></script>
+    <script src="app/rss/rss.js"></script>
+    <script src="app/about/about.controller.js"></script>
+    <script src="app/about/about.js"></script>
+  <!-- TODO :: Include component reqs here -->
+    <script src="components/header/header.controller.js"></script>
+    <script src="components/header/header.directive.js"></script>
+
+  </body>
+</html>
