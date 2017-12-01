@@ -1,0 +1,2 @@
+# Timeout for RSS feeds update (in hours)
+RSS_TIMEOUT = 3

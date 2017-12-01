@@ -3,7 +3,12 @@ import feedparser
 import random
 from datetime import datetime
 from time import mktime
+from server.config.private import RSS_TIMEOUT
 from server.utils.Future import Future
+
+# RSS Article object - gets updated if it's over a certain number of hours old
+# !!!! Not multithread safe
+RSS_ARTICLES = {"articles": [], "updated": datetime.now()}
 
 
 def rss_feeds():
@@ -54,8 +59,14 @@ def get_articles(limit):
     """
     Gets a number of random articles from RSS feeds
     :param limit: Returns this number of articles
+    :mutate RSS_ARTICLES: if they haven't been updated
     :return: Custom RSS Feed
     """
+    if len(RSS_ARTICLES['articles']) > 0 and ((datetime.now() - RSS_ARTICLES['updated']).total_seconds() / 360.0) < RSS_TIMEOUT:
+        print "Returning list of articles that was updated on {0}".format(str(RSS_ARTICLES['updated']))
+        tmp = RSS_ARTICLES['articles']
+        random.shuffle(tmp)
+        return tmp
     # pull down all feeds
     future_calls = [Future(feedparser.parse, rss_url) for rss_url in rss_feeds()]
     # block until they are all in
@@ -66,6 +77,9 @@ def get_articles(limit):
     random.shuffle(entries)
     # Limit isn't working for some reason...
     # return entries[:limit]
+    print "Updating articles and returning new list!"
+    RSS_ARTICLES['articles'] = entries
+    RSS_ARTICLES['updated'] = datetime.now()
     return entries
 
 
