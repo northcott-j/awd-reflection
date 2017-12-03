@@ -19,6 +19,12 @@ def serve_frontend(path):
     return send_from_directory(ROOT_PATH + '/client/', path)
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    from server import ROOT_PATH
+    return send_file(ROOT_PATH + '/client/' + 'index.html')
+
+
 # Serves the index file
 @app.route('/')
 def serve_index():
